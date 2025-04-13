@@ -1,0 +1,57 @@
+<p>employee-list works!</p>
+
+<div class="container">
+
+  <ul>
+    <li><h2>Liste des Employés</h2></li>
+    <li>
+      <button routerLink="/add-employee">Ajouter un Employé</button> <!-- Lien pour ajouter un nouvel employé -->
+    </li>
+  </ul>
+  <!-- Afficher la liste des employés -->
+  <!--<ul>
+    <li *ngFor="let employee of employees">
+      <p>{{ employee.FirstName }} - {{ employee.LastName }} - {{ employee.Position }} - {{ employee.Email }} - {{ employee.Departement }}</p>
+    </li>
+  </ul>-->
+  <!-- Tableau pour afficher les employés -->
+  <table id="example" class="table table-striped" style="width:100%">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Position</th>
+        <th>Email</th>
+        <th>Department</th>
+        <!--<th>Age</th>--> <!-- Exemple d'ajout d'un champ supplémentaire -->
+        <!--<th>Start date</th>--> <!-- Exemple d'ajout d'un champ supplémentaire -->
+        <!--<th>Salary</th>--> <!-- Exemple d'ajout d'un champ supplémentaire -->
+        <th>Actions</th> <!-- Colonne pour le bouton Update -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Itérer sur les employés -->
+      <tr *ngFor="let employee of employees">
+        <td>{{ employee.FirstName }}</td>
+        <td>{{ employee.LastName }}</td>
+        <td>{{ employee.Position }}</td>
+        <td>{{ employee.Email }}</td>
+        <td>{{ employee.Department }}</td>
+        <!--<td>{{ employee.Age }}</td>--> <!-- Exemple d'ajout d'un champ -->
+        <!--<td>{{ employee.StartDate | date }}</td>--> <!-- Exemple d'ajout d'un champ -->
+        <!--<td>{{ employee.Salary | currency }}</td>--> <!-- Exemple d'ajout d'un champ -->
+      <td>
+        <button (click)="updateEmployee(employee)">Update</button> <!-- Bouton  -->
+        <!--<button class="btn btn-danger btn-sm" (click)="deleteEmployee(employee.id)">Delete</button>-->
+        <button class="btn btn-danger btn-sm" (click)="deleteEmployee(employee.EmployeeId)">Delete</button>
+
+
+      </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Message si la liste est vide -->
+  <p *ngIf="employees.length === 0">Aucun employé trouvé.</p>
+
+</div>

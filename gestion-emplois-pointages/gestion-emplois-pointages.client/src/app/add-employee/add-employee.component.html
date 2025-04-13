@@ -1,0 +1,68 @@
+<div class="container">
+  <h2>Ajouter un Nouvel Employé</h2>
+
+  <!-- Formulaire pour l'ajout d'un employé -->
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+    <!-- Prénom -->
+    <div class="form-group">
+      <label for="firstName">Prénom :</label>
+      <input id="firstName" formControlName="firstName" type="text" class="form-control" />
+      <div *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched" class="error">
+        <small *ngIf="employeeForm.get('firstName')?.errors?.['required']">Le prénom est requis.</small>
+        <small *ngIf="employeeForm.get('firstName')?.errors?.['minlength']">Le prénom doit avoir au moins 2 caractères.</small>
+        <small *ngIf="employeeForm.get('firstName')?.errors?.['maxlength']">Le prénom ne doit pas dépasser 50 caractères.</small>
+      </div>
+    </div>
+
+    <!-- Nom -->
+    <div class="form-group">
+      <label for="lastName">Nom :</label>
+      <input id="lastName" formControlName="lastName" type="text" class="form-control" />
+      <div *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched" class="error">
+        <small *ngIf="employeeForm.get('lastName')?.errors?.['required']">Le nom est requis.</small>
+        <small *ngIf="employeeForm.get('lastName')?.errors?.['minlength']">Le nom doit avoir au moins 2 caractères.</small>
+        <small *ngIf="employeeForm.get('lastName')?.errors?.['maxlength']">Le nom ne doit pas dépasser 50 caractères.</small>
+      </div>
+    </div>
+
+    <!-- Poste -->
+    <div class="form-group">
+      <label for="position">Poste :</label>
+      <input id="positionId" formControlName="positionId" type="text" class="form-control" />
+      <div *ngIf="employeeForm.get('position')?.invalid && employeeForm.get('position')?.touched" class="error">
+        <small *ngIf="employeeForm.get('position')?.errors?.['required']">Le poste est requis.</small>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input id="email" formControlName="email" type="email" class="form-control" />
+      <div *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched" class="error">
+        <small *ngIf="employeeForm.get('email')?.errors?.['required']">L'email est requis.</small>
+        <small *ngIf="employeeForm.get('email')?.errors?.['email']">Veuillez entrer un email valide.</small>
+      </div>
+    </div>
+
+    <!-- Département -->
+    <div class="form-group">
+      <label for="department">Département :</label>
+      <input id="departmentId" formControlName="departmentId" type="text" class="form-control" />
+    </div>
+
+    <!-- Date d'embauche -->
+    <div class="form-group">
+      <label for="dateHired">Date d'embauche :</label>
+      <input id="dateHired" formControlName="dateHired" type="date" class="form-control" />
+      <div *ngIf="employeeForm.get('dateHired')?.invalid && employeeForm.get('dateHired')?.touched" class="error">
+        <small *ngIf="employeeForm.get('dateHired')?.errors?.['required']">La date d'embauche est requise.</small>
+      </div>
+    </div>
+
+    <!-- Bouton de soumission -->
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">Soumettre</button>
+    </div>
+  </form>
+</div>

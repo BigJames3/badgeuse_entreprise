@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+.admin-container {
+  display: flex;
+  height: 100vh;
+}
+
+.content {
+  flex: 3;
+  padding: 20px;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+}
+
+.menu {
+  flex: 1;
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+}
+
+  .menu h3 {
+    text-align: center;
+  }
+
+  .menu ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .menu li {
+    margin: 10px 0;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+  }
+
+    .menu a.active {
+      font-weight: bold;
+      color: #007bff;
+    }

@@ -1,0 +1,21 @@
+<div class="admin-container">
+  <!-- Colonne gauche pour le menu -->
+
+
+  <div class="menu">
+    <h3>Menu d'Administration</h3>
+    <ul>
+      <li><a routerLink="/employee-list" routerLinkActive="active">Liste des Employés</a></li>
+      <li><a routerLink="/add-employee" routerLinkActive="active">Ajouter un Employé</a></li>
+      <li><a routerLink="/weather" routerLinkActive="active">Prévisions météo</a></li>
+    </ul>
+    <div class="container mt-5">
+      <h5 class="text-center text-primary">Bienvenue sur Angular avec Bootstrap</h5>
+    </div>
+  </div>
+
+  <!-- Colonne droite pour le contenu -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
