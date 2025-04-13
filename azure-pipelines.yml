@@ -11,8 +11,8 @@ variables:
   GIT_NAME: "BigJames3"
 
 steps:
-  - task: Checkout@2
-    displayName: 'Checkout repository'
+  - checkout: self
+    displayName: 'Checkout du dépôt'
 
   # Étape de push vers GitHub
   - script: |
