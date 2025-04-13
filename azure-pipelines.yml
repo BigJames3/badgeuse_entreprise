@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include:
+      - main  # Branche à surveiller
+
+pool:
+  vmImage: 'ubuntu-latest'  # Utilise une image d'agent Ubuntu
+
+steps:
+  - task: Checkout@2  # Récupère le code du dépôt
+    displayName: 'Checkout repository'
+
+  # Ajoute ici les autres étapes nécessaires comme la compilation, les tests, etc.
+
+  - script: |
+      git config --global user.email "ton.email@example.com"
+      git config --global user.name "TonNom"
+      git remote add origin https://github.com/BigJames3/badgeuse_entreprise.git
+      git add .
+      git commit -m "Mise à jour du projet"
+      git push origin main  # Pousse les changements vers GitHub
+    displayName: 'Push to GitHub'
