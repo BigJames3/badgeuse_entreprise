@@ -6,17 +6,21 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'  # Utilise une image d'agent Ubuntu
 
+variables:
+  GIT_EMAIL: "traorejames34@gmail.com"
+  GIT_NAME: "BigJames3"
+
 steps:
-  - task: Checkout@2  # Récupère le code du dépôt
+  - task: Checkout@2
     displayName: 'Checkout repository'
 
-  # Ajoute ici les autres étapes nécessaires comme la compilation, les tests, etc.
-
+  # Étape de push vers GitHub
   - script: |
-      git config --global user.email "traorejames34@gmail.com"
-      git config --global user.name "BigJames3"
-      git remote add origin https://github.com/BigJames3/badgeuse_entreprise.git
-      git add .
-      git commit -m "Mise à jour du projet"
-      git push origin main  # Pousse les changements vers GitHub
-    displayName: 'Push to GitHub'
+      git config --global user.email "$(GIT_EMAIL)"
+      git config --global user.name "$(GIT_NAME)"
+
+      git remote add github https://$(GH_TOKEN)@github.com/BigJames3/badgeuse_entreprise.git
+
+      git pull --rebase github main || true
+      git push github main
+    displayName: 'Push vers GitHub'
