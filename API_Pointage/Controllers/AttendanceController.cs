@@ -76,7 +76,7 @@ namespace API_Pointage.Controllers
 
             return Ok(new { Message = "Pointage de sortie enregistré avec succès.", Data = attendance });
         }
-
+         
         // 3. Récupérer la présence d'un employé
         [HttpGet("{employeeId}")]
         public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendance(Guid employeeId, DateTime? startDate, DateTime? endDate)
