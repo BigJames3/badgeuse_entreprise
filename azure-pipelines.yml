@@ -4,7 +4,7 @@ trigger:
       - main  # Branche à surveiller
 
 pool:
-  vmImage: 'ubuntu-latest'  # Utilise une image d'agent Ubuntu
+  vmImage: 'Default'  # Utilise une image d'agent Ubuntu
 
 variables:
   GIT_EMAIL: "traorejames34@gmail.com"
