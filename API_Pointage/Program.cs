@@ -52,7 +52,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("https://localhost:4200") // Autoriser l'origine de votre frontend
+        builder.WithOrigins("http://localhost:4200") // Autoriser l'origine de votre frontend
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -83,7 +83,5 @@ app.MapControllers();
 
 //// Ajouter CORS au pipeline
 //app.UseCors("AllowLocalhost");
-
 app.UseRouting();
-
 app.Run();

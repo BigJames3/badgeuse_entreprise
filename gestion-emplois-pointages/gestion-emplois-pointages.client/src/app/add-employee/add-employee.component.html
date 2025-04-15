@@ -29,7 +29,7 @@
     <!-- Poste -->
     <div class="form-group">
       <label for="position">Poste :</label>
-      <input id="positionId" formControlName="positionId" type="text" class="form-control" />
+      <input id="position" formControlName="position" type="text" class="form-control" />
       <div *ngIf="employeeForm.get('position')?.invalid && employeeForm.get('position')?.touched" class="error">
         <small *ngIf="employeeForm.get('position')?.errors?.['required']">Le poste est requis.</small>
       </div>
@@ -48,7 +48,7 @@
     <!-- Département -->
     <div class="form-group">
       <label for="department">Département :</label>
-      <input id="departmentId" formControlName="departmentId" type="text" class="form-control" />
+      <input id="department" formControlName="department" type="text" class="form-control" />
     </div>
 
     <!-- Date d'embauche -->
@@ -66,3 +66,6 @@
     </div>
   </form>
 </div>
+
+<pre>{{ employeeForm.valid }}</pre>
+<pre>{{ employeeForm.value | json }}</pre>
