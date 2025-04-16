@@ -12,5 +12,7 @@ namespace API_Pointage.Models
         [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Le Departement doit contenir entre 2 et 50 caractères.")]
         public required string DepartmentName { get; set; }
+
+        public ICollection<Employee> Employees { get; set; }
     }
 }

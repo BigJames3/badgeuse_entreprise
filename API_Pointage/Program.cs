@@ -1,8 +1,6 @@
 using API_Pointage.DbContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Web;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -17,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-//builder.Services.AddControllers();
+// Configuration des contrôleurs et options JSON
 // Ajout des contrôleurs avec options JSON
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -47,7 +45,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 //// Ajouter la configuration CORS
-/// Ajouter le service CORS
+// Configuration CORS pour autoriser Angular (localhost:4200)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
@@ -75,10 +73,11 @@ app.UseHttpsRedirection();
 // CORS doit être avant tout le reste
 app.UseCors("AllowLocalhost");
 
+//Authentification & Autorisation
 app.UseAuthentication();  // Ajout de l'authentification JWT
-
 app.UseAuthorization();
 
+// Routing + Map Controllers
 app.MapControllers();
 
 //// Ajouter CORS au pipeline
