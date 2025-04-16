@@ -7,7 +7,7 @@ namespace API_Pointage.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; }  // Clé primaire
 
         [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Le Departement doit contenir entre 2 et 50 caractères.")]

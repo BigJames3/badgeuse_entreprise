@@ -31,8 +31,28 @@ namespace API_Pointage.Models
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // Date de création de l'enregistrement
 
-
-        public Guid PositionId { get; set; }  // Poste de l'employé (ex: "Développeur", "Manager")
+        // Clés étrangères vers les autres entités
+        public Guid PositionId { get; set; }  
         public Guid DepartmentId { get; set; }
+        public Guid EntrepriseId { get; set; }
+
+        // Propriétés de navigation
+        [ForeignKey("PositionId")]
+        public Position PositionRef { get; set; }  // Référence à l'entité Position
+
+        [ForeignKey("DepartmentId")]
+        public Department DepartmentRef { get; set; }  // Référence à l'entité Department
+
+        [ForeignKey("EntrepriseId")]
+        public Entreprise Entreprise { get; set; }
+        // Référence à l'entité Entreprise
+        public ICollection<Attendance> Attendances { get; set; }  // Liste des présences associées à l'employé
+
+        //public ICollection<LeaveRequest> LeaveRequests { get; set; }  // Liste des demandes de congé associées à l'employé
+        //public ICollection<OvertimeRequest> OvertimeRequests { get; set; }  // Liste des demandes d'heures supplémentaires associées à l'employé
+        //public ICollection<Salary> Salaries { get; set; }  // Liste des salaires associés à l'employé
+        //public ICollection<Notification> Notifications { get; set; }  // Liste des notifications associées à l'employé
+        //public ICollection<Entreprise> Entreprises { get; set; }  // Liste des entreprises associées à l'employé
+
     }
 }
