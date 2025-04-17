@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using API_Pointage.Models;
 
 namespace API_Pointage.Models
 {
@@ -12,20 +13,20 @@ namespace API_Pointage.Models
 
         [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Le prénom doit contenir entre 2 et 50 caractères.")]
-        public required string FirstName { get; set; }  // Prénom de l'employé
+        public  string FirstName { get; set; }  // Prénom de l'employé
 
         [Required]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Le nom doit contenir entre 2 et 50 caractères.")]
-        public required string LastName { get; set; }  // Nom de l'employé
+        public string LastName { get; set; }  // Nom de l'employé
 
         [Required]
-        public required string Position { get; set; }  // Poste de l'employé (ex: "Développeur", "Manager")
+        public string Position { get; set; }  // Poste de l'employé (ex: "Développeur", "Manager")
 
         [Required] 
         [EmailAddress(ErrorMessage = "Veuillez entrer une adresse email valide.")]// Validation du format de l'email        
-        public required string Email { get; set; }
+        public string Email { get; set; }
 
-        public required string Department { get; set; }
+        public string Department { get; set; }
         public DateTime DateHired { get; set; }  // Date d'embauche
 
         [Required]
@@ -47,12 +48,6 @@ namespace API_Pointage.Models
         public Entreprise Entreprise { get; set; }
         // Référence à l'entité Entreprise
         public ICollection<Attendance> Attendances { get; set; }  // Liste des présences associées à l'employé
-
-        //public ICollection<LeaveRequest> LeaveRequests { get; set; }  // Liste des demandes de congé associées à l'employé
-        //public ICollection<OvertimeRequest> OvertimeRequests { get; set; }  // Liste des demandes d'heures supplémentaires associées à l'employé
-        //public ICollection<Salary> Salaries { get; set; }  // Liste des salaires associés à l'employé
-        //public ICollection<Notification> Notifications { get; set; }  // Liste des notifications associées à l'employé
-        //public ICollection<Entreprise> Entreprises { get; set; }  // Liste des entreprises associées à l'employé
 
     }
 }

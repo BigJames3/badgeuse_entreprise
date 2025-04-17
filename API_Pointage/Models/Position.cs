@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using API_Pointage.Models;
 
 namespace API_Pointage.Models
 {

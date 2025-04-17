@@ -1,7 +1,9 @@
 ﻿using API_Pointage.DbContext;
+using API_Pointage.Helpers;
 using API_Pointage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API_Pointage.Helpers;
 
 namespace API_Pointage.Controllers
 {
@@ -22,25 +24,39 @@ namespace API_Pointage.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> AddEmployee([FromBody] Employee employee)
         {
+            // Vérifie si l'email existe déjà dans la base
+            if (await _context.Employees.AnyAsync(e => e.Email == employee.Email))
+            {
+                return BadRequest(new
+                {
+                    Code = ErrorCodes.EmailAlreadyExists,
+                    Message = "Un employé avec cet email existe déjà."
+                });
+            }
+
             // Vérification de l'ID envoyé par le client
             if (employee.EmployeeId == Guid.Empty)
             {
                 employee.EmployeeId = Guid.NewGuid(); // Génère un GUID si aucun ID n'est fourni
             }
 
-            // Vérifiez que les données nécessaires sont présentes
+            // Vérifie que les données nécessaires sont présentes
             if (string.IsNullOrWhiteSpace(employee.FirstName) || string.IsNullOrWhiteSpace(employee.LastName))
             {
-                return BadRequest("Le prénom et le nom sont obligatoires.");
+                return BadRequest(new
+                {
+                    Code = ErrorCodes.MissingFields,
+                    Message = "Le prénom et le nom sont obligatoires."
+                });
             }
 
-            //employee.EmployeeId = Guid.NewGuid();
-            employee.CreatedAt = DateTime.UtcNow; // Ajouter la date actuelle pour l'employé
-            _context.Employees.Add(employee); // Ajoute l'employé à la base de données
-            await _context.SaveChangesAsync(); // Enregistre l'employé dans la base de données
+            employee.CreatedAt = DateTime.UtcNow; // Ajoute la date actuelle
+            _context.Employees.Add(employee);     // Ajoute l'employé
+            await _context.SaveChangesAsync();    // Enregistre
 
-            return CreatedAtAction(nameof(GetEmployee), new { employeeId = employee.EmployeeId }, employee); // Retourne l'employé ajouté avec son ID
+            return CreatedAtAction(nameof(GetEmployee), new { employeeId = employee.EmployeeId }, employee);
         }
+
 
         // 2. Récupérer la liste des employés
         [HttpGet]

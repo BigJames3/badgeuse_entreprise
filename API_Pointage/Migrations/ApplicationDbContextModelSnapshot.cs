@@ -34,15 +34,33 @@ namespace API_Pointage.Migrations
                     b.Property<DateTime?>("CheckOutTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateNow")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("MethodUsed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ScanPointId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan?>("TotalDuration")
+                        .HasColumnType("time");
+
                     b.HasKey("AttendanceId");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ScanPointId");
 
                     b.ToTable("Attendances");
                 });
@@ -86,6 +104,12 @@ namespace API_Pointage.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("EntrepriseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EntrepriseId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -105,7 +129,49 @@ namespace API_Pointage.Migrations
 
                     b.HasKey("EmployeeId");
 
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("EntrepriseId");
+
+                    b.HasIndex("EntrepriseId1");
+
+                    b.HasIndex("PositionId");
+
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.Entreprise", b =>
+                {
+                    b.Property<Guid>("EntrepriseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Adresse")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("HeureArriveePrevue")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HeureDepartPrevue")
+                        .HasColumnType("time");
+
+                    b.Property<string>("NomEntreprise")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("EntrepriseId");
+
+                    b.ToTable("Entreprises");
                 });
 
             modelBuilder.Entity("API_Pointage.Models.Position", b =>
@@ -122,6 +188,36 @@ namespace API_Pointage.Migrations
                     b.HasKey("PositionId");
 
                     b.ToTable("Positions");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.ScanPoint", b =>
+                {
+                    b.Property<Guid>("ScanPointId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EntrepriseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Localisation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QrCodeValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ScanPointId");
+
+                    b.HasIndex("EntrepriseId");
+
+                    b.ToTable("ScanPoints");
                 });
 
             modelBuilder.Entity("API_Pointage.Models.User", b =>
@@ -173,12 +269,89 @@ namespace API_Pointage.Migrations
             modelBuilder.Entity("API_Pointage.Models.Attendance", b =>
                 {
                     b.HasOne("API_Pointage.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("Attendances")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API_Pointage.Models.ScanPoint", "ScanPoint")
+                        .WithMany("Attendances")
+                        .HasForeignKey("ScanPointId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Employee");
+
+                    b.Navigation("ScanPoint");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.Employee", b =>
+                {
+                    b.HasOne("API_Pointage.Models.Department", "DepartmentRef")
+                        .WithMany("Employees")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_Pointage.Models.Entreprise", "Entreprise")
+                        .WithMany()
+                        .HasForeignKey("EntrepriseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("API_Pointage.Models.Entreprise", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("EntrepriseId1");
+
+                    b.HasOne("API_Pointage.Models.Position", "PositionRef")
+                        .WithMany("Employees")
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DepartmentRef");
+
+                    b.Navigation("Entreprise");
+
+                    b.Navigation("PositionRef");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.ScanPoint", b =>
+                {
+                    b.HasOne("API_Pointage.Models.Entreprise", "Entreprise")
+                        .WithMany("ScanPoints")
+                        .HasForeignKey("EntrepriseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entreprise");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.Department", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.Employee", b =>
+                {
+                    b.Navigation("Attendances");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.Entreprise", b =>
+                {
+                    b.Navigation("Employees");
+
+                    b.Navigation("ScanPoints");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.Position", b =>
+                {
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("API_Pointage.Models.ScanPoint", b =>
+                {
+                    b.Navigation("Attendances");
                 });
 #pragma warning restore 612, 618
         }

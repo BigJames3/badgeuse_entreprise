@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using API_Pointage.Models;
 
 namespace API_Pointage.Models
 {
@@ -7,6 +8,7 @@ namespace API_Pointage.Models
     {
         [Key]
         public Guid ScanPointId { get; set; }
+        public Guid EmployeeId { get; set; } // Référence à l'employé
 
         [Required]
         public required string Name { get; set; } // Exemple : "Entrée principale", "Zone de production"

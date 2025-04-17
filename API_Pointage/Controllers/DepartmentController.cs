@@ -2,6 +2,8 @@
 using API_Pointage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API_Pointage.Helpers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,24 +59,29 @@ namespace API_Pointage.Controllers
         [HttpPut("{DepartmentId}")]
         public async Task<IActionResult> UpdateDepartment(Guid DepartmentId, [FromBody] Department updatedDepartment)
         {
-            // Trouve le département à mettre à jour
+            // Vérifie que l'ID dans l'URL correspond à l'ID dans le corps de la requête
+            if (DepartmentId != updatedDepartment.DepartmentId)
+            {
+                return BadRequest(new { Code = ErrorCodes.IdMismatch, Message = "L'ID du département ne correspond pas à celui de l'URL." });
+            }
+
+            // Cherche le département à mettre à jour
             var department = await _context.Departments.FindAsync(DepartmentId);
 
             if (department == null)
             {
-                // Si le département n'existe pas, retourne une erreur 404
-                return NotFound();
+                return BadRequest(new { Code = ErrorCodes.DepartmentNotFound, Message = "Département introuvable." });
+                //return NotFound(new { Code = "DEPARTMENT_NOT_FOUND", Message = "Département introuvable." });
             }
 
-            // Met à jour les propriétés du département
+            // Met à jour les champs autorisés
             department.DepartmentName = updatedDepartment.DepartmentName;
 
-            // Sauvegarde les modifications dans la base de données
             await _context.SaveChangesAsync();
 
-            // Retourne un statut 204 NoContent pour indiquer que l'opération a réussi
-            return NoContent();
+            return NoContent(); // Opération réussie, pas de contenu à retourner
         }
+
 
         // DELETE api/<DepartmentController>/5
         [HttpDelete("{DepartmentId}")]
