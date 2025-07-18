@@ -1,0 +1,34 @@
+<h2>Ajouter une entreprise</h2>
+<form (ngSubmit)="onSubmit()" #entrepriseForm="ngForm">
+  <div>
+    <label>Nom de l'entreprise:</label>
+    <input type="text" [(ngModel)]="entreprise.nomEntreprise" name="nomEntreprise" required />
+  </div>
+
+  <div>
+    <label>Adresse:</label>
+    <input type="text" [(ngModel)]="entreprise.adresse" name="adresse" />
+  </div>
+
+  <div>
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="entreprise.email" name="email" required />
+  </div>
+
+  <div>
+    <label>Date de création:</label>
+    <input type="date" [(ngModel)]="entreprise.createdAt" name="createdAt" required />
+  </div>
+
+  <div>
+    <label>Heure d'arrivée prévue:</label>
+    <input type="time" [(ngModel)]="entreprise.heureArriveePrevue" name="heureArriveePrevue" />
+  </div>
+
+  <div>
+    <label>Heure de départ prévue:</label>
+    <input type="time" [(ngModel)]="entreprise.heureDepartPrevue" name="heureDepartPrevue" />
+  </div>
+
+  <button type="submit">Ajouter</button>
+</form>

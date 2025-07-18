@@ -1,4 +1,3 @@
-// services/employee.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -12,11 +11,6 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Récupère un employé par son ID
-   * @param employeeId ID de l'employé à récupérer
-   * @returns Observable<Employee>
-   */
   getEmployeeById(employeeId: string): Observable<Employee> {
     return this.http.get<Employee>(`${this.apiUrl}/${employeeId}`);
   }

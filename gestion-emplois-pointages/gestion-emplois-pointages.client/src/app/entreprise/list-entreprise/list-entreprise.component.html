@@ -1,0 +1,25 @@
+<h2>Liste des entreprises</h2>
+<a routerLink="/entreprises/add">➕ Ajouter une entreprise</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Date création</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entreprise of entreprises">
+      <td>{{ entreprise.nomEntreprise }}</td>
+      <td>{{ entreprise.email }}</td>
+      <td>{{ entreprise.createdAt | date }}</td>
+      <td>
+        <a [routerLink]="['/entreprises/edit', entreprise.entrepriseId]">✏️</a>
+        |
+        <a [routerLink]="['/entreprises/delete', entreprise.entrepriseId]">🗑️</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

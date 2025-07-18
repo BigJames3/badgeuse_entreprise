@@ -1,0 +1,10 @@
+<h2>Supprimer l'entreprise</h2>
+<p>Êtes-vous sûr de vouloir supprimer l'entreprise suivante ?</p>
+
+<div *ngIf="entreprise">
+  <p><strong>Nom:</strong> {{ entreprise.nomEntreprise }}</p>
+  <p><strong>Email:</strong> {{ entreprise.email }}</p>
+
+  <button (click)="onDelete()">✅ Supprimer</button>
+  <a routerLink="/entreprises">❌ Annuler</a>
+</div>
