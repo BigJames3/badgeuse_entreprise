@@ -10,7 +10,7 @@ export class Employee {
   Department?: string; // Optionnel comme dans le modèle C#
   DepartmentId: string;
   CreatedAt: string;
-
+   
   constructor(
     EmployeeId: string = uuidv4(),
     FirstName: string,
